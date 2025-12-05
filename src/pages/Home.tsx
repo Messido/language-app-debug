@@ -1,62 +1,69 @@
 import { SignedIn, SignedOut } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  ShieldCheckIcon,
+  BoltIcon,
+  DevicePhoneMobileIcon,
+  ArrowRightIcon,
+} from "@heroicons/react/24/outline";
 
 export default function Home() {
   return (
-    <div className="min-h-[calc(100vh-4rem)]">
+    <div className="min-h-[calc(100vh-4rem)] flex flex-col bg-white">
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 gradient-bg opacity-10"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32">
-          <div className="text-center animate-fade-in">
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6">
-              <span className="gradient-text">Secure Authentication</span>
-              <br />
-              <span className="text-gray-800">Made Simple</span>
+      <section className="relative overflow-hidden pt-20 pb-32">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-brand-blue-3/40 via-transparent to-transparent opacity-50"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent"></div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="animate-fade-in space-y-8">
+            <div className="inline-flex items-center rounded-full border border-gray-200 bg-white px-3 py-1 text-sm font-medium text-gray-600 shadow-sm mb-4">
+              <span className="flex h-2 w-2 rounded-full bg-brand-blue-1 mr-2"></span>
+              v1.0 is now live
+            </div>
+
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-gray-900">
+              Master New Languages <br className="hidden sm:block" />
+              <span className="text-brand-blue-1">With Confidence</span>
             </h1>
-            <p className="text-xl sm:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed">
-              A production-ready React starter with Clerk authentication. Build
-              secure apps faster with persistent sessions and protected routes.
+
+            <p className="text-xl sm:text-2xl text-gray-500 max-w-3xl mx-auto leading-relaxed font-light">
+              The smartest way to learn. Interactive lessons, real-time progress
+              tracking, and a supportive community to help you reach fluency
+              faster.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
               <SignedOut>
-                <Link to="/sign-up" className="btn-primary text-lg px-8 py-4">
-                  Get Started Free
-                  <svg
-                    className="inline-block ml-2 w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+                <Link to="/sign-up">
+                  <Button
+                    size="lg"
+                    className="rounded-full px-8 py-6 text-lg font-bold bg-brand-blue-1 hover:bg-brand-blue-2 shadow-lg shadow-brand-blue-1/20 transition-all hover:scale-105"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 7l5 5m0 0l-5 5m5-5H6"
-                    />
-                  </svg>
+                    Start Learning Free
+                  </Button>
                 </Link>
-                <Link to="/sign-in" className="btn-secondary text-lg px-8 py-4">
-                  Sign In
+                <Link to="/sign-in">
+                  <Button
+                    variant="ghost"
+                    size="lg"
+                    className="rounded-full px-8 py-6 text-lg font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                  >
+                    Sign In
+                  </Button>
                 </Link>
               </SignedOut>
               <SignedIn>
-                <Link to="/dashboard" className="btn-primary text-lg px-8 py-4">
-                  Go to Dashboard
-                  <svg
-                    className="inline-block ml-2 w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+                <Link to="/dashboard">
+                  <Button
+                    size="lg"
+                    className="rounded-full px-8 py-6 text-lg font-bold bg-brand-blue-1 hover:bg-brand-blue-2 shadow-lg shadow-brand-blue-1/20 transition-all hover:scale-105 gap-2"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 7l5 5m0 0l-5 5m5-5H6"
-                    />
-                  </svg>
+                    Go to Dashboard
+                    <ArrowRightIcon className="w-5 h-5" />
+                  </Button>
                 </Link>
               </SignedIn>
             </div>
@@ -65,124 +72,105 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-4">
-            <span className="gradient-text">Powerful Features</span>
-          </h2>
-          <p className="text-center text-gray-600 mb-12 text-lg">
-            Everything you need for modern authentication
-          </p>
+      <section className="py-24 bg-gray-50/50 border-t border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 mb-4">
+              Everything you need to succeed
+            </h2>
+            <p className="text-lg text-gray-500 max-w-2xl mx-auto">
+              We provide the tools and environment for effective language
+              acquisition.
+            </p>
+          </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {/* Feature 1 */}
-            <div className="card group hover:scale-105">
-              <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <svg
-                  className="w-8 h-8 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-800">
-                Secure by Default
-              </h3>
-              <p className="text-gray-600">
-                Enterprise-grade security with HTTP-only cookies and automatic
-                session management.
-              </p>
-            </div>
+            <Card className="border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <CardContent className="pt-8">
+                <div className="h-12 w-12 rounded-xl bg-brand-blue-3/30 flex items-center justify-center text-brand-blue-1 mb-6">
+                  <ShieldCheckIcon className="h-7 w-7" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                  Scientific Method
+                </h3>
+                <p className="text-gray-500 leading-relaxed">
+                  Our curriculum is designed by linguists to ensure long-term
+                  retention and practical usage skills.
+                </p>
+              </CardContent>
+            </Card>
 
             {/* Feature 2 */}
-            <div className="card group hover:scale-105">
-              <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <svg
-                  className="w-8 h-8 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 10V3L4 14h7v7l9-11h-7z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-800">
-                Lightning Fast
-              </h3>
-              <p className="text-gray-600">
-                Built with Vite and React for blazing-fast development and
-                optimal performance.
-              </p>
-            </div>
+            <Card className="border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <CardContent className="pt-8">
+                <div className="h-12 w-12 rounded-xl bg-brand-yellow-1 flex items-center justify-center text-brand-yellow-3 border border-brand-yellow-2 mb-6">
+                  <BoltIcon className="h-7 w-7" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                  Rapid Progress
+                </h3>
+                <p className="text-gray-500 leading-relaxed">
+                  Track your daily streaks and see measurable improvements in
+                  your speaking and listening abilities.
+                </p>
+              </CardContent>
+            </Card>
 
             {/* Feature 3 */}
-            <div className="card group hover:scale-105">
-              <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-teal-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <svg
-                  className="w-8 h-8 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-800">
-                Fully Responsive
-              </h3>
-              <p className="text-gray-600">
-                Beautiful UI that works perfectly on mobile, tablet, and desktop
-                devices.
-              </p>
-            </div>
+            <Card className="border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <CardContent className="pt-8">
+                <div className="h-12 w-12 rounded-xl bg-green-100 flex items-center justify-center text-green-600 mb-6">
+                  <DevicePhoneMobileIcon className="h-7 w-7" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                  Learn Anywhere
+                </h3>
+                <p className="text-gray-500 leading-relaxed">
+                  Seamlessly switch between devices. Your progress is
+                  syncronized instantly across mobile and desktop.
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
+      <section className="py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          <div className="card text-center bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 text-white border-0">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Ready to Get Started?
-            </h2>
-            <p className="text-xl mb-8 text-blue-100">
-              Join thousands of developers building secure applications with
-              Clerk.
-            </p>
-            <SignedOut>
-              <Link
-                to="/sign-up"
-                className="inline-block px-8 py-4 bg-white text-blue-600 font-bold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 text-lg"
-              >
-                Create Your Free Account
-              </Link>
-            </SignedOut>
-            <SignedIn>
-              <Link
-                to="/dashboard"
-                className="inline-block px-8 py-4 bg-white text-blue-600 font-bold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 text-lg"
-              >
-                View Your Dashboard
-              </Link>
-            </SignedIn>
+          <div className="rounded-3xl bg-brand-blue-1 p-8 sm:p-16 text-center shadow-2xl shadow-brand-blue-1/30 relative overflow-hidden">
+            <div className="absolute top-0 right-0 -mt-10 -mr-10 h-64 w-64 rounded-full bg-white/10 blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 -mb-10 -ml-10 h-64 w-64 rounded-full bg-white/10 blur-3xl"></div>
+
+            <div className="relative z-10">
+              <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-white">
+                Ready to start your journey?
+              </h2>
+              <p className="text-xl mb-10 text-white/90 max-w-2xl mx-auto">
+                Join over 10,000 learners mastering new languages today.
+              </p>
+              <SignedOut>
+                <Link to="/sign-up">
+                  <Button
+                    size="lg"
+                    className="rounded-full px-10 py-7 bg-white text-brand-blue-1 hover:bg-white/90 font-bold text-lg shadow-xl border-none"
+                  >
+                    Create Free Account
+                  </Button>
+                </Link>
+              </SignedOut>
+              <SignedIn>
+                <Link to="/dashboard">
+                  <Button
+                    size="lg"
+                    className="rounded-full px-10 py-7 bg-white text-brand-blue-1 hover:bg-white/90 font-bold text-lg shadow-xl border-none"
+                  >
+                    Continue Learning
+                  </Button>
+                </Link>
+              </SignedIn>
+            </div>
           </div>
         </div>
       </section>

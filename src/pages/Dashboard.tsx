@@ -1,222 +1,203 @@
 import { useUser } from "@clerk/clerk-react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  UserIcon,
+  ShieldCheckIcon,
+  ClockIcon,
+  Cog6ToothIcon,
+  BookOpenIcon,
+  PencilSquareIcon,
+} from "@heroicons/react/24/outline";
 
 export default function Dashboard() {
   const { user } = useUser();
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-[calc(100vh-4rem)] py-12 px-4 sm:px-6 lg:px-8 bg-gray-50/50">
+      <div className="max-w-7xl mx-auto space-y-8">
         {/* Welcome Section */}
-        <div className="mb-8 animate-fade-in">
-          <h1 className="text-4xl sm:text-5xl font-bold mb-2">
+        <div className="animate-fade-in space-y-2">
+          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900">
             Welcome back,{" "}
-            <span className="gradient-text">{user?.firstName || "User"}</span>!
-            👋
+            <span className="text-brand-blue-1">
+              {user?.firstName || "User"}
+            </span>
+            ! 👋
           </h1>
-          <p className="text-xl text-gray-600">
-            Here's your personalized dashboard
+          <p className="text-xl text-gray-500 max-w-2xl">
+            Track your progress, manage your account, and explore new learning
+            opportunities.
           </p>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
-          {/* Stat Card 1 */}
-          <div className="card">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-700">
+        <div className="grid md:grid-cols-3 gap-6">
+          <Card className="border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">
                 Account Status
-              </h3>
-              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
+              </CardTitle>
+              <div className="h-4 w-4 text-green-500">
+                <ShieldCheckIcon />
               </div>
-            </div>
-            <p className="text-3xl font-bold gradient-text">Active</p>
-            <p className="text-sm text-gray-500 mt-1">
-              Your account is verified
-            </p>
-          </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-gray-900">Active</div>
+              <p className="text-xs text-gray-400 mt-1">
+                Your account is verified
+              </p>
+            </CardContent>
+          </Card>
 
-          {/* Stat Card 2 */}
-          <div className="card">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-700">Sessions</h3>
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
+          <Card className="border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">
+                Sessions
+              </CardTitle>
+              <div className="h-4 w-4 text-brand-blue-1">
+                <ClockIcon />
               </div>
-            </div>
-            <p className="text-3xl font-bold gradient-text">Persistent</p>
-            <p className="text-sm text-gray-500 mt-1">Stay logged in forever</p>
-          </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-gray-900">Persistent</div>
+              <p className="text-xs text-gray-400 mt-1">
+                Stay logged in forever
+              </p>
+            </CardContent>
+          </Card>
 
-          {/* Stat Card 3 */}
-          <div className="card">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-700">Security</h3>
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center">
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                  />
-                </svg>
+          <Card className="border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">
+                Security
+              </CardTitle>
+              <div className="h-4 w-4 text-brand-yellow-2">
+                <ShieldCheckIcon />
               </div>
-            </div>
-            <p className="text-3xl font-bold gradient-text">Protected</p>
-            <p className="text-sm text-gray-500 mt-1">
-              Enterprise-grade security
-            </p>
-          </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-gray-900">Protected</div>
+              <p className="text-xs text-gray-400 mt-1">
+                Enterprise-grade security
+              </p>
+            </CardContent>
+          </Card>
         </div>
 
         {/* User Info Card */}
-        <div className="card mb-8">
-          <h2 className="text-2xl font-bold mb-6 gradient-text">
-            Your Profile
-          </h2>
-          <div className="space-y-4">
+        <Card className="border-gray-100 shadow-lg bg-white overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-blue-1 to-brand-blue-2" />
+          <CardHeader>
+            <CardTitle className="text-2xl font-bold text-gray-900">
+              Your Profile
+            </CardTitle>
+            <CardDescription>Manage your personal information</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
             <div className="flex items-center space-x-4">
-              <img
-                src={user?.imageUrl}
-                alt="Profile"
-                className="w-20 h-20 rounded-full ring-4 ring-blue-500/20"
-              />
+              <div className="relative">
+                <img
+                  src={user?.imageUrl}
+                  alt="Profile"
+                  className="w-20 h-20 rounded-full ring-4 ring-gray-50 border-2 border-white shadow-sm"
+                />
+                <div className="absolute bottom-1 right-1 h-5 w-5 rounded-full bg-green-400 border-2 border-white"></div>
+              </div>
               <div>
-                <p className="text-lg font-semibold text-gray-800">
+                <p className="text-xl font-bold text-gray-900">
                   {user?.fullName || "User"}
                 </p>
-                <p className="text-gray-600">
-                  {user?.primaryEmailAddress?.emailAddress}
-                </p>
+                <div className="flex items-center gap-2 text-gray-500">
+                  <UserIcon className="h-4 w-4" />
+                  <p className="text-sm">
+                    {user?.primaryEmailAddress?.emailAddress}
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-4 pt-4 border-t border-gray-200">
-              <div>
-                <p className="text-sm text-gray-500">User ID</p>
-                <p className="font-mono text-sm text-gray-700 break-all">
+            <div className="grid md:grid-cols-2 gap-4 pt-4 border-t border-gray-100">
+              <div className="space-y-1">
+                <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+                  User ID
+                </p>
+                <p className="font-mono text-xs bg-gray-50 p-2 rounded-md text-gray-600 break-all border border-gray-100">
                   {user?.id}
                 </p>
               </div>
-              <div>
-                <p className="text-sm text-gray-500">Created At</p>
-                <p className="text-sm text-gray-700">
+              <div className="space-y-1">
+                <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+                  Member Since
+                </p>
+                <p className="text-sm font-medium text-gray-700">
                   {user?.createdAt
-                    ? new Date(user.createdAt).toLocaleDateString()
+                    ? new Date(user.createdAt).toLocaleDateString(undefined, {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })
                     : "N/A"}
                 </p>
               </div>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
 
         {/* Quick Actions */}
-        <div className="card">
-          <h2 className="text-2xl font-bold mb-6 gradient-text">
-            Quick Actions
-          </h2>
+        <div className="space-y-4">
+          <h2 className="text-xl font-bold text-gray-900">Quick Actions</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <button className="p-6 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 hover:shadow-lg transition-all text-left group">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
+            <Button
+              variant="outline"
+              className="h-auto p-6 flex flex-col items-start gap-4 hover:border-brand-blue-1 hover:bg-brand-blue-3/10 transition-all border-dashed"
+            >
+              <div className="p-2 rounded-full bg-brand-blue-3/30 text-brand-blue-1">
+                <PencilSquareIcon className="h-6 w-6" />
               </div>
-              <h3 className="font-semibold text-gray-800">Edit Profile</h3>
-              <p className="text-sm text-gray-600 mt-1">
-                Update your information
-              </p>
-            </button>
+              <div className="text-left">
+                <h3 className="font-semibold text-gray-900">Edit Profile</h3>
+                <p className="text-xs text-gray-500 mt-1">
+                  Update your personal details
+                </p>
+              </div>
+            </Button>
 
-            <button className="p-6 rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200 hover:shadow-lg transition-all text-left group">
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
+            <Button
+              variant="outline"
+              className="h-auto p-6 flex flex-col items-start gap-4 hover:border-brand-blue-1 hover:bg-brand-blue-3/10 transition-all border-dashed"
+            >
+              <div className="p-2 rounded-full bg-purple-100 text-purple-600">
+                <Cog6ToothIcon className="h-6 w-6" />
               </div>
-              <h3 className="font-semibold text-gray-800">Settings</h3>
-              <p className="text-sm text-gray-600 mt-1">
-                Manage your preferences
-              </p>
-            </button>
+              <div className="text-left">
+                <h3 className="font-semibold text-gray-900">Settings</h3>
+                <p className="text-xs text-gray-500 mt-1">
+                  Manage account preferences
+                </p>
+              </div>
+            </Button>
 
-            <button className="p-6 rounded-xl bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 hover:shadow-lg transition-all text-left group">
-              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
-                </svg>
+            <Button
+              variant="outline"
+              className="h-auto p-6 flex flex-col items-start gap-4 hover:border-brand-blue-1 hover:bg-brand-blue-3/10 transition-all border-dashed"
+            >
+              <div className="p-2 rounded-full bg-brand-yellow-1 text-brand-yellow-3 border border-brand-yellow-2">
+                <BookOpenIcon className="h-6 w-6" />
               </div>
-              <h3 className="font-semibold text-gray-800">Documentation</h3>
-              <p className="text-sm text-gray-600 mt-1">
-                Learn more about features
-              </p>
-            </button>
+              <div className="text-left">
+                <h3 className="font-semibold text-gray-900">Documentation</h3>
+                <p className="text-xs text-gray-500 mt-1">
+                  Learn how to use the platform
+                </p>
+              </div>
+            </Button>
           </div>
         </div>
       </div>
