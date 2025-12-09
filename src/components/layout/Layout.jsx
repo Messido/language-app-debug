@@ -1,17 +1,17 @@
 import { Outlet } from "react-router-dom";
-import LangLearnNavbar from "./LangLearnNavbar";
-import SecondaryNavbar from "./navbar/SecondaryNavbar";
-import FooterSection from "./footer";
+import Header from "./Header";
+import SecondaryNav from "./SecondaryNav";
+import Footer from "./Footer";
 
 export default function Layout() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-body-dark">
-      <LangLearnNavbar />
-      <SecondaryNavbar />
+      <Header />
+      <SecondaryNav />
       <main className="flex-1">
         <Outlet />
       </main>
-      <FooterSection />
+      <Footer />
     </div>
   );
 }

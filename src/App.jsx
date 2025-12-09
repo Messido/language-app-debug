@@ -4,24 +4,33 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import Layout from "./components/Layout";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Home from "./pages/Home";
-import Dashboard from "./pages/Dashboard";
-import SignInPage from "./pages/SignInPage";
-import SignUpPage from "./pages/SignUpPage";
-import NotFound from "./pages/NotFound";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import RefundPolicy from "./pages/RefundPolicy";
-import TermsConditions from "./pages/TermsConditions";
-// Secondary nav pages
-import VocabularyPage from "./pages/VocabularyPage";
-import GrammarPage from "./pages/GrammarPage";
-import StoriesPage from "./pages/StoriesPage";
-import PracticePage from "./pages/PracticePage";
-import BlogsPage from "./pages/BlogsPage";
-import AIPracticePage from "./pages/AIPracticePage";
-import ProgressReportPage from "./pages/ProgressReportPage";
+
+// Layout
+import Layout from "@/components/layout/Layout";
+import ProtectedRoute from "@/components/shared/ProtectedRoute";
+
+// Pages
+import Home from "@/pages/Home";
+import Dashboard from "@/pages/Dashboard";
+import NotFound from "@/pages/NotFound";
+
+// Legal pages
+import PrivacyPolicy from "@/pages/legal/PrivacyPolicy";
+import RefundPolicy from "@/pages/legal/RefundPolicy";
+import TermsConditions from "@/pages/legal/TermsConditions";
+
+// Auth feature
+import SignInPage from "@/features/auth/pages/SignInPage";
+import SignUpPage from "@/features/auth/pages/SignUpPage";
+
+// Learning features
+import VocabularyPage from "@/features/vocabulary/pages/VocabularyPage";
+import GrammarPage from "@/features/grammar/pages/GrammarPage";
+import StoriesPage from "@/features/stories/pages/StoriesPage";
+import PracticePage from "@/features/practice/pages/PracticePage";
+import BlogsPage from "@/features/blogs/pages/BlogsPage";
+import AIPracticePage from "@/features/ai-practice/pages/AIPracticePage";
+import ProgressReportPage from "@/features/progress-report/pages/ProgressReportPage";
 
 function App() {
   return (
@@ -46,9 +55,9 @@ function App() {
             }
           />
 
-          {/* Secondary Navigation Routes (Protected) */}
+          {/* Learning Feature Routes (Protected) */}
           <Route
-            path="vocabulary"
+            path="vocabulary/*"
             element={
               <ProtectedRoute>
                 <VocabularyPage />
