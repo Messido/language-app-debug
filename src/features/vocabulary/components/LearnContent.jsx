@@ -1,119 +1,152 @@
 import { Link } from "react-router-dom";
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import { ArrowRight } from "lucide-react";
+import CarouselSection from "@/components/ui/CarouselSection";
+import CarouselCard from "@/components/ui/CarouselCard";
 
-// CEFR Level configuration with colors
-const cefrLevels = [
+const levelData = [
   {
+    title: "A1 Beginner",
+    subtitle: "Basic",
     level: "A1",
-    bgColor: "bg-sky-50 dark:bg-sky-900/20",
-    textColor: "text-sky-500 dark:text-sky-400",
-    borderColor: "border-sky-200 dark:border-sky-800",
+    to: "/vocabulary/cefr/a1",
+    image:
+      "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=500",
   },
   {
+    title: "A2 Elementary",
+    subtitle: "Basic",
     level: "A2",
-    bgColor: "bg-sky-50 dark:bg-sky-900/20",
-    textColor: "text-sky-400 dark:text-sky-300",
-    borderColor: "border-sky-200 dark:border-sky-800",
+    to: "/vocabulary/cefr/a2",
+    image:
+      "https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?auto=format&fit=crop&q=80&w=500",
   },
   {
+    title: "B1 Intermediate",
+    subtitle: "Independent",
     level: "B1",
-    bgColor: "bg-teal-50 dark:bg-teal-900/20",
-    textColor: "text-teal-500 dark:text-teal-400",
-    borderColor: "border-teal-200 dark:border-teal-800",
+    to: "/vocabulary/cefr/b1",
+    image:
+      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=500",
   },
   {
+    title: "B2 Upper Intermediate",
+    subtitle: "Independent",
     level: "B2",
-    bgColor: "bg-teal-50 dark:bg-teal-900/20",
-    textColor: "text-teal-400 dark:text-teal-300",
-    borderColor: "border-teal-200 dark:border-teal-800",
+    to: "/vocabulary/cefr/b2",
+    image:
+      "https://images.unsplash.com/photo-1544531586-fde5298cdd40?auto=format&fit=crop&q=80&w=500",
   },
   {
+    title: "C1 Advanced",
+    subtitle: "Proficient",
     level: "C1",
-    bgColor: "bg-orange-50 dark:bg-orange-900/20",
-    textColor: "text-orange-500 dark:text-orange-400",
-    borderColor: "border-orange-200 dark:border-orange-800",
+    to: "/vocabulary/cefr/c1",
+    image:
+      "https://images.unsplash.com/photo-1550592704-6c76defa9985?auto=format&fit=crop&q=80&w=500",
   },
   {
+    title: "C2 Mastery",
+    subtitle: "Proficient",
     level: "C2",
-    bgColor: "bg-orange-50 dark:bg-orange-900/20",
-    textColor: "text-orange-400 dark:text-orange-300",
-    borderColor: "border-orange-200 dark:border-orange-800",
+    to: "/vocabulary/cefr/c2",
+    image:
+      "https://images.unsplash.com/photo-1664575602276-acd073f104c1?auto=format&fit=crop&q=80&w=500",
   },
 ];
 
-// Level Button Component
-function LevelButton({ level, bgColor, textColor, borderColor }) {
-  return (
-    <Link
-      to={`/vocabulary/cefr/${level.toLowerCase()}`}
-      className="flex flex-col items-center gap-2 group flex-1"
-    >
-      <div
-        className={`w-full h-24 rounded-xl ${bgColor} ${borderColor} border-2 flex items-center justify-center transition-all group-hover:scale-105 group-hover:shadow-lg`}
-      >
-        <span className={`text-3xl font-bold ${textColor}`}>{level}</span>
-      </div>
-      <span className="text-xs text-gray-500 dark:text-slate-400 group-hover:text-gray-700 dark:group-hover:text-slate-300 transition-colors whitespace-nowrap">
-        {level} Level Wordlist
-      </span>
-    </Link>
-  );
-}
-
-// Section Card Component
-function SectionCard({ title, description, to }) {
-  return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl border-l-4 border-sky-500 shadow-sm p-6">
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex-1">
-          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
-            {title}
-          </h3>
-          <p className="text-sm text-gray-500 dark:text-slate-400">
-            {description}
-          </p>
-        </div>
-        <Link
-          to={to}
-          className="flex-shrink-0 text-sky-500 hover:text-sky-600 dark:text-sky-400 dark:hover:text-sky-300 group transition-colors"
-        >
-          <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-        </Link>
-      </div>
-    </div>
-  );
-}
+const topicData = [
+  {
+    title: "Travel & Transport",
+    subtitle: "120 words",
+    to: "/vocabulary/topics",
+    image:
+      "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80&w=500",
+  },
+  {
+    title: "Business & Work",
+    subtitle: "85 words",
+    to: "/vocabulary/topics",
+    image:
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=500",
+  },
+  {
+    title: "Food & Dining",
+    subtitle: "95 words",
+    to: "/vocabulary/topics",
+    image:
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=500",
+  },
+  {
+    title: "Health & Fitness",
+    subtitle: "60 words",
+    to: "/vocabulary/topics",
+    image:
+      "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=500",
+  },
+  {
+    title: "Technology",
+    subtitle: "100 words",
+    to: "/vocabulary/topics",
+    image:
+      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=500",
+  },
+];
 
 export default function LearnContent() {
-  // TODO: Get this from context/state when language selector is wired up
   const learningLanguage = "English";
 
   return (
     <div className="space-y-8 mt-4">
       {/* Level-Based Vocabulary Section */}
-      <section className="space-y-4">
-        <SectionCard
-          title={`Level-Based ${learningLanguage} Vocabulary`}
-          description="Here you will find different wordlists categorized by level according to CEFR."
-          to="/vocabulary/level-based"
-        />
-
-        {/* CEFR Level Buttons - Full width below */}
-        <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
-          {cefrLevels.map((item) => (
-            <LevelButton key={item.level} {...item} />
-          ))}
-        </div>
-      </section>
+      <CarouselSection
+        title={`Master Your Proficiency`}
+        description={`Learn essential ${learningLanguage} vocabulary structured by CEFR levels, from beginner specific to advanced mastery.`}
+        action={
+          <Link
+            to="/vocabulary/level-based"
+            className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-sm transition-all hover:bg-gray-50 hover:text-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600 dark:hover:text-sky-400"
+            aria-label="View all levels"
+          >
+            <ArrowRight className="h-6 w-6" />
+          </Link>
+        }
+      >
+        {levelData.map((item) => (
+          <CarouselCard
+            key={item.level}
+            title={item.title}
+            subtitle={item.subtitle}
+            image={item.image}
+            to={item.to}
+          />
+        ))}
+      </CarouselSection>
 
       {/* Topical Vocabulary Section */}
-      <section>
-        <SectionCard
-          title="Topical Vocabulary"
-          description="Here you will find extensive wordlists categorized by topic. Each topic includes subcategories that will help you expand your vocabulary knowledge."
-          to="/vocabulary/topics"
-        />
-      </section>
+      <CarouselSection
+        title="Explore by Topic"
+        description="Expand your vocabulary with curated wordlists for every situation, from daily life to professional environments."
+        className="bg-sky-50 dark:bg-slate-800/50 border-sky-100 dark:border-slate-700"
+        action={
+          <Link
+            to="/vocabulary/topics"
+            className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-sm transition-all hover:bg-gray-50 hover:text-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600 dark:hover:text-sky-400"
+            aria-label="View all topics"
+          >
+            <ArrowRight className="h-6 w-6" />
+          </Link>
+        }
+      >
+        {topicData.map((item, index) => (
+          <CarouselCard
+            key={index}
+            title={item.title}
+            subtitle={item.subtitle}
+            image={item.image}
+            to={item.to}
+          />
+        ))}
+      </CarouselSection>
     </div>
   );
 }

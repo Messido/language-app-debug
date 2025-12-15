@@ -139,18 +139,7 @@ function LevelCard({
           {description}
         </p>
 
-        {/* Progress Bar */}
-        <div className="flex items-center gap-2 mb-3">
-          <div className="flex-1 h-1.5 bg-gray-100 dark:bg-slate-700 rounded-full overflow-hidden">
-            <div
-              className={`h-full ${progressColor} rounded-full transition-all`}
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-          <span className="text-xs text-gray-400 dark:text-slate-500 min-w-[28px] text-right">
-            {progress}%
-          </span>
-        </div>
+        {/* Progress Bar Removed */}
 
         {/* Stats and Arrow */}
         <div className="flex items-center justify-between">
@@ -170,10 +159,6 @@ function LevelCard({
                 <path strokeWidth="2" d="M12 6v6l4 2" />
               </svg>
               {words} Words
-            </span>
-            <span className="flex items-center gap-1">
-              <ClockIcon className="w-3.5 h-3.5" />
-              {time}
             </span>
           </div>
 

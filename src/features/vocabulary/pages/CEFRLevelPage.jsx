@@ -2,7 +2,6 @@ import { Link, useParams } from "react-router-dom";
 import {
   BookmarkIcon,
   BookOpenIcon,
-  ClockIcon,
   RectangleStackIcon,
   Squares2X2Icon,
   LanguageIcon,
@@ -18,7 +17,7 @@ const lessonData = {
       lessons: 8,
       wordCount: 120,
       time: "45m",
-      progress: 3,
+      progress: 0,
     },
     {
       id: 2,
@@ -446,10 +445,10 @@ function LessonCard({ lesson, levelColor }) {
       </div>
 
       {/* Stats */}
-      <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-slate-400 mb-4 pb-4 border-b border-gray-100 dark:border-slate-700">
+      <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-slate-400 mb-4 pb-4 border-b border-gray-100 dark:border-slate-700 whitespace-nowrap">
         <span className="flex items-center gap-1">
           <BookOpenIcon className="w-3.5 h-3.5" />
-          {lesson.lessons} Lesson
+          {lesson.lessons} Chapters
         </span>
         <span className="flex items-center gap-1">
           <svg
@@ -462,10 +461,6 @@ function LessonCard({ lesson, levelColor }) {
             <path strokeWidth="2" d="M12 6v6l4 2" />
           </svg>
           {lesson.wordCount} Words
-        </span>
-        <span className="flex items-center gap-1">
-          <ClockIcon className="w-3.5 h-3.5" />
-          {lesson.time}
         </span>
       </div>
 
@@ -499,7 +494,7 @@ export default function CEFRLevelPage() {
       </div>
 
       {/* Grid of Lesson Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {lessons.map((lesson) => (
           <LessonCard key={lesson.id} lesson={lesson} levelColor={colors} />
         ))}

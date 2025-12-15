@@ -7,11 +7,19 @@ export default function SignInPage() {
       <div className="w-full max-w-md animate-fade-in">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-gray-900 dark:text-primary-dark tracking-tight">
-            Welcome Back
+            Welcome
           </h2>
           <p className="text-gray-500 dark:text-secondary-dark mt-2">
-            Sign in to continue your learning streak
+            Sign in to continue
           </p>
+          <div className="mt-4">
+            <Link
+              to="/"
+              className="text-sm font-medium text-gray-500 dark:text-slate-400 hover:text-brand-blue-1 transition-colors"
+            >
+              &larr; Back to Home
+            </Link>
+          </div>
         </div>
 
         <SignIn
@@ -33,15 +41,6 @@ export default function SignInPage() {
           signUpUrl="/sign-up"
           afterSignInUrl="/dashboard"
         />
-
-        <div className="mt-8 text-center">
-          <Link
-            to="/"
-            className="text-sm font-medium text-gray-500 dark:text-slate-400 hover:text-brand-blue-1 transition-colors"
-          >
-            &larr; Back to Home
-          </Link>
-        </div>
       </div>
     </div>
   );

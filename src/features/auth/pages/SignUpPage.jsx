@@ -14,6 +14,12 @@ export default function SignUpPage() {
           </p>
         </div>
 
+        <style>{`
+          .cl-formFieldRow:has(input[name="firstName"]) .cl-formFieldHintText,
+          .cl-formFieldRow:has(input[name="lastName"]) .cl-formFieldHintText {
+            display: none !important;
+          }
+        `}</style>
         <SignUp
           appearance={{
             elements: {
