@@ -403,8 +403,15 @@ function ActionButton({ icon: Icon, label }) {
 
 // Lesson Card component
 function LessonCard({ lesson, levelColor }) {
+  // Extract level from URL or props if widely available, defaulting to 'a1' for link construction
+  const { level } = useParams();
+  const currentLevel = level || "a1";
+
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 flex flex-col">
+    <Link
+      to={`/vocabulary/learn/${currentLevel}/${lesson.id}`}
+      className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 flex flex-col hover:shadow-md transition-all cursor-pointer block"
+    >
       {/* Image and Bookmark */}
       <div className="relative mb-4">
         {/* Placeholder image */}
@@ -471,7 +478,7 @@ function LessonCard({ lesson, levelColor }) {
         <ActionButton icon={LanguageIcon} label="Match the pairs" />
         <ActionButton icon={BookOpenIcon} label="Spelling" />
       </div>
-    </div>
+    </Link>
   );
 }
 

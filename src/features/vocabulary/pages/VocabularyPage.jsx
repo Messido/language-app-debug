@@ -9,6 +9,7 @@ import {
 import PageTabs from "@/components/ui/PageTabs";
 import LearnContent from "../components/LearnContent";
 import LevelBasedPage from "./LevelBasedPage";
+import LessonLearnPage from "./LessonLearnPage";
 import CEFRLevelPage from "./CEFRLevelPage";
 
 // Placeholder content components
@@ -98,6 +99,7 @@ export default function VocabularyPage() {
         {/* CEFR Level routes */}
         <Route path="cefr" element={<Navigate to="a1" replace />} />
         <Route path="cefr/:level" element={<CEFRLevelPage />} />
+        <Route path="learn/:level/:lessonId" element={<LessonLearnPage />} />
 
         {/* Level-Based route */}
         <Route path="level-based" element={<LevelBasedPage />} />
