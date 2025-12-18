@@ -7,11 +7,11 @@ import {
   LessonHeader,
   CompletionScreen,
 } from "../components/lesson-learn";
-import { fetchLessonWords } from "../../../services/vocabularyApi";
+import { fetchVocabulary } from "../../../services/vocabularyApi";
 
 export default function LessonLearnPage() {
   const navigate = useNavigate();
-  const { level, lessonId } = useParams();
+  const { level, category } = useParams();
   const [words, setWords] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -23,10 +23,10 @@ export default function LessonLearnPage() {
       try {
         setIsLoading(true);
         setError(null);
-        const lesson = lessonId ? parseInt(lessonId, 10) : 1;
-        // Pass level to filter vocabulary by CEFR level
-        const data = await fetchLessonWords(lesson, {
+        // Fetch vocabulary filtered by level and category
+        const data = await fetchVocabulary({
           level: level?.toUpperCase(),
+          category: category,
         });
         setWords(data.words || []);
       } catch (err) {
@@ -37,7 +37,7 @@ export default function LessonLearnPage() {
       }
     }
     loadWords();
-  }, [lessonId, level]);
+  }, [level, category]);
 
   const handleNext = () => {
     if (currentIndex < words.length - 1) {
@@ -113,7 +113,7 @@ export default function LessonLearnPage() {
           words={words}
         />
         <main className="flex-1 flex items-center justify-center p-4">
-          <CompletionScreen />
+          <CompletionScreen wordCount={words.length} categoryName={category} />
         </main>
       </div>
     );

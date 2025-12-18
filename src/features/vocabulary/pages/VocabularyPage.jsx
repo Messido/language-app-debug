@@ -96,10 +96,14 @@ export default function VocabularyPage() {
         <Route path="lessons/activities" element={<ActivitiesContent />} />
         <Route path="practice" element={<PracticeContent />} />
 
-        {/* CEFR Level routes */}
-        <Route path="cefr" element={<Navigate to="a1" replace />} />
-        <Route path="cefr/:level" element={<CEFRLevelPage />} />
-        <Route path="learn/:level/:lessonId" element={<LessonLearnPage />} />
+        {/* Level wordlist page - shows categories for a level */}
+        <Route path="lessons/learn/:level" element={<CEFRLevelPage />} />
+
+        {/* Flashcard learning route - level + category */}
+        <Route
+          path="lessons/learn/:level/:category"
+          element={<LessonLearnPage />}
+        />
 
         {/* Level-Based route */}
         <Route path="level-based" element={<LevelBasedPage />} />

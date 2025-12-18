@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   BookmarkIcon,
@@ -6,346 +7,7 @@ import {
   Squares2X2Icon,
   LanguageIcon,
 } from "@heroicons/react/24/outline";
-
-// Hardcoded lesson data for each CEFR level (will come from backend)
-const lessonData = {
-  a1: [
-    {
-      id: 1,
-      title: "People",
-      words: ["mother", "father", "friend"],
-      lessons: 8,
-      wordCount: 120,
-      time: "45m",
-      progress: 0,
-    },
-    {
-      id: 2,
-      title: "Food",
-      words: ["apple", "bread", "water"],
-      lessons: 10,
-      wordCount: 145,
-      time: "1h 10m",
-      progress: 0,
-    },
-    {
-      id: 3,
-      title: "Animals",
-      words: ["dog", "cat", "bird"],
-      lessons: 7,
-      wordCount: 95,
-      time: "38m",
-      progress: 0,
-    },
-    {
-      id: 4,
-      title: "Colors",
-      words: ["red", "blue", "green"],
-      lessons: 5,
-      wordCount: 60,
-      time: "25m",
-      progress: 0,
-    },
-    {
-      id: 5,
-      title: "Numbers",
-      words: ["one", "two", "three"],
-      lessons: 6,
-      wordCount: 80,
-      time: "32m",
-      progress: 0,
-    },
-    {
-      id: 6,
-      title: "Family",
-      words: ["sister", "brother", "baby"],
-      lessons: 9,
-      wordCount: 110,
-      time: "50m",
-      progress: 0,
-    },
-  ],
-  a2: [
-    {
-      id: 1,
-      title: "Travel",
-      words: ["airport", "hotel", "ticket"],
-      lessons: 12,
-      wordCount: 180,
-      time: "1h 30m",
-      progress: 5,
-    },
-    {
-      id: 2,
-      title: "Shopping",
-      words: ["price", "sale", "cash"],
-      lessons: 10,
-      wordCount: 155,
-      time: "1h 5m",
-      progress: 0,
-    },
-    {
-      id: 3,
-      title: "Weather",
-      words: ["sunny", "rainy", "cloudy"],
-      lessons: 8,
-      wordCount: 100,
-      time: "42m",
-      progress: 0,
-    },
-    {
-      id: 4,
-      title: "Health",
-      words: ["doctor", "medicine", "pain"],
-      lessons: 11,
-      wordCount: 165,
-      time: "1h 15m",
-      progress: 0,
-    },
-    {
-      id: 5,
-      title: "Work",
-      words: ["office", "meeting", "boss"],
-      lessons: 14,
-      wordCount: 210,
-      time: "1h 45m",
-      progress: 0,
-    },
-    {
-      id: 6,
-      title: "Home",
-      words: ["kitchen", "bedroom", "garden"],
-      lessons: 9,
-      wordCount: 130,
-      time: "55m",
-      progress: 0,
-    },
-  ],
-  b1: [
-    {
-      id: 1,
-      title: "Education",
-      words: ["university", "degree", "exam"],
-      lessons: 15,
-      wordCount: 240,
-      time: "2h",
-      progress: 0,
-    },
-    {
-      id: 2,
-      title: "Technology",
-      words: ["software", "device", "network"],
-      lessons: 18,
-      wordCount: 280,
-      time: "2h 20m",
-      progress: 0,
-    },
-    {
-      id: 3,
-      title: "Environment",
-      words: ["pollution", "climate", "recycle"],
-      lessons: 12,
-      wordCount: 190,
-      time: "1h 35m",
-      progress: 0,
-    },
-    {
-      id: 4,
-      title: "Culture",
-      words: ["tradition", "festival", "custom"],
-      lessons: 10,
-      wordCount: 160,
-      time: "1h 20m",
-      progress: 0,
-    },
-    {
-      id: 5,
-      title: "Media",
-      words: ["newspaper", "broadcast", "article"],
-      lessons: 11,
-      wordCount: 175,
-      time: "1h 28m",
-      progress: 0,
-    },
-    {
-      id: 6,
-      title: "Sports",
-      words: ["tournament", "athlete", "score"],
-      lessons: 13,
-      wordCount: 200,
-      time: "1h 40m",
-      progress: 0,
-    },
-  ],
-  b2: [
-    {
-      id: 1,
-      title: "Business",
-      words: ["investment", "profit", "strategy"],
-      lessons: 20,
-      wordCount: 320,
-      time: "2h 40m",
-      progress: 0,
-    },
-    {
-      id: 2,
-      title: "Politics",
-      words: ["democracy", "election", "policy"],
-      lessons: 16,
-      wordCount: 260,
-      time: "2h 10m",
-      progress: 0,
-    },
-    {
-      id: 3,
-      title: "Science",
-      words: ["research", "experiment", "theory"],
-      lessons: 18,
-      wordCount: 290,
-      time: "2h 25m",
-      progress: 0,
-    },
-    {
-      id: 4,
-      title: "Art",
-      words: ["exhibition", "sculpture", "canvas"],
-      lessons: 12,
-      wordCount: 195,
-      time: "1h 38m",
-      progress: 0,
-    },
-    {
-      id: 5,
-      title: "Law",
-      words: ["court", "judge", "verdict"],
-      lessons: 14,
-      wordCount: 225,
-      time: "1h 52m",
-      progress: 0,
-    },
-    {
-      id: 6,
-      title: "Finance",
-      words: ["mortgage", "interest", "loan"],
-      lessons: 17,
-      wordCount: 275,
-      time: "2h 18m",
-      progress: 0,
-    },
-  ],
-  c1: [
-    {
-      id: 1,
-      title: "Philosophy",
-      words: ["ethics", "metaphysics", "logic"],
-      lessons: 22,
-      wordCount: 380,
-      time: "3h 10m",
-      progress: 0,
-    },
-    {
-      id: 2,
-      title: "Literature",
-      words: ["narrative", "allegory", "prose"],
-      lessons: 19,
-      wordCount: 340,
-      time: "2h 50m",
-      progress: 0,
-    },
-    {
-      id: 3,
-      title: "Economics",
-      words: ["inflation", "recession", "gdp"],
-      lessons: 21,
-      wordCount: 360,
-      time: "3h",
-      progress: 0,
-    },
-    {
-      id: 4,
-      title: "Psychology",
-      words: ["cognition", "behavior", "therapy"],
-      lessons: 18,
-      wordCount: 310,
-      time: "2h 35m",
-      progress: 0,
-    },
-    {
-      id: 5,
-      title: "Medicine",
-      words: ["diagnosis", "surgery", "symptom"],
-      lessons: 24,
-      wordCount: 420,
-      time: "3h 30m",
-      progress: 0,
-    },
-    {
-      id: 6,
-      title: "Architecture",
-      words: ["facade", "blueprint", "column"],
-      lessons: 15,
-      wordCount: 265,
-      time: "2h 12m",
-      progress: 0,
-    },
-  ],
-  c2: [
-    {
-      id: 1,
-      title: "Diplomacy",
-      words: ["treaty", "ambassador", "summit"],
-      lessons: 25,
-      wordCount: 450,
-      time: "3h 45m",
-      progress: 0,
-    },
-    {
-      id: 2,
-      title: "Jurisprudence",
-      words: ["precedent", "statute", "litigation"],
-      lessons: 23,
-      wordCount: 410,
-      time: "3h 25m",
-      progress: 0,
-    },
-    {
-      id: 3,
-      title: "Linguistics",
-      words: ["morphology", "syntax", "phonetics"],
-      lessons: 20,
-      wordCount: 370,
-      time: "3h 5m",
-      progress: 0,
-    },
-    {
-      id: 4,
-      title: "Astrophysics",
-      words: ["quasar", "nebula", "relativity"],
-      lessons: 18,
-      wordCount: 330,
-      time: "2h 45m",
-      progress: 0,
-    },
-    {
-      id: 5,
-      title: "Genetics",
-      words: ["chromosome", "mutation", "genome"],
-      lessons: 22,
-      wordCount: 395,
-      time: "3h 18m",
-      progress: 0,
-    },
-    {
-      id: 6,
-      title: "Neuroscience",
-      words: ["synapse", "cortex", "neuron"],
-      lessons: 24,
-      wordCount: 430,
-      time: "3h 35m",
-      progress: 0,
-    },
-  ],
-};
+import { fetchCategoriesByLevel } from "../../../services/vocabularyApi";
 
 // Level colors config
 const levelColors = {
@@ -388,9 +50,10 @@ const levelColors = {
 };
 
 // Action button component
-function ActionButton({ icon: Icon, label }) {
+function ActionButton({ icon: Icon, label, onClick }) {
   return (
     <button
+      onClick={onClick}
       className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors group"
       title={label}
     >
@@ -401,23 +64,16 @@ function ActionButton({ icon: Icon, label }) {
   );
 }
 
-// Lesson Card component
-function LessonCard({ lesson, levelColor }) {
-  // Extract level from URL or props if widely available, defaulting to 'a1' for link construction
-  const { level } = useParams();
-  const currentLevel = level || "a1";
-
+// Category Card component - now uses API data
+function CategoryCard({ category, levelColor, level }) {
   return (
-    <Link
-      to={`/vocabulary/learn/${currentLevel}/${lesson.id}`}
-      className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 flex flex-col hover:shadow-md transition-all cursor-pointer block"
-    >
+    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 flex flex-col hover:shadow-md transition-all">
       {/* Image and Bookmark */}
       <div className="relative mb-4">
         {/* Placeholder image */}
         <div className="w-full h-32 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-slate-700 dark:to-slate-600 rounded-xl flex items-center justify-center">
           <div className="w-20 h-20 bg-gray-200 dark:bg-slate-600 rounded-full flex items-center justify-center">
-            <span className="text-3xl">👤</span>
+            <span className="text-3xl">📚</span>
           </div>
         </div>
         {/* Bookmark */}
@@ -428,26 +84,28 @@ function LessonCard({ lesson, levelColor }) {
 
       {/* Title */}
       <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
-        {lesson.title}
+        {category.name}
       </h3>
 
-      {/* Description */}
-      <p className="text-sm text-gray-500 dark:text-slate-400 mb-4">
-        Learn words like {lesson.words.join(", ")}
+      {/* Subcategories */}
+      <p className="text-sm text-gray-500 dark:text-slate-400 mb-4 line-clamp-2">
+        {category.subcategories.length > 0
+          ? category.subcategories.slice(0, 3).join(", ")
+          : "Learn vocabulary in this category"}
       </p>
 
-      {/* Progress bar */}
+      {/* Progress bar - placeholder for now */}
       <div className="flex items-center gap-2 mb-4">
         <div
           className={`flex-1 h-1.5 ${levelColor.progressBg} rounded-full overflow-hidden`}
         >
           <div
             className={`h-full ${levelColor.progressFill} rounded-full transition-all`}
-            style={{ width: `${lesson.progress}%` }}
+            style={{ width: "0%" }}
           />
         </div>
         <span className="text-xs text-gray-400 dark:text-slate-500 min-w-[28px] text-right">
-          {lesson.progress}%
+          0%
         </span>
       </div>
 
@@ -455,37 +113,90 @@ function LessonCard({ lesson, levelColor }) {
       <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-slate-400 mb-4 pb-4 border-b border-gray-100 dark:border-slate-700 whitespace-nowrap">
         <span className="flex items-center gap-1">
           <BookOpenIcon className="w-3.5 h-3.5" />
-          {lesson.lessons} Chapters
+          {category.wordCount} Words
         </span>
         <span className="flex items-center gap-1">
-          <svg
-            className="w-3.5 h-3.5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <circle cx="12" cy="12" r="10" strokeWidth="2" />
-            <path strokeWidth="2" d="M12 6v6l4 2" />
-          </svg>
-          {lesson.wordCount} Words
+          {category.subcategories.length} Topics
         </span>
       </div>
 
       {/* Action buttons */}
       <div className="flex items-center justify-between">
         <ActionButton icon={RectangleStackIcon} label="Word Card" />
-        <ActionButton icon={Squares2X2Icon} label="Flashcards" />
+        <Link
+          to={`/vocabulary/lessons/learn/${level}/${category.slug}`}
+          className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors group"
+          title="Flashcards"
+        >
+          <div className="w-9 h-9 rounded-full bg-sky-100 dark:bg-sky-900/30 flex items-center justify-center">
+            <Squares2X2Icon className="w-4 h-4 text-sky-500" />
+          </div>
+        </Link>
         <ActionButton icon={LanguageIcon} label="Match the pairs" />
         <ActionButton icon={BookOpenIcon} label="Spelling" />
       </div>
-    </Link>
+    </div>
   );
 }
 
 export default function CEFRLevelPage() {
   const { level } = useParams();
-  const lessons = lessonData[level] || lessonData.a1;
+  const [categories, setCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const colors = levelColors[level] || levelColors.a1;
+
+  useEffect(() => {
+    async function loadCategories() {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const data = await fetchCategoriesByLevel(level?.toUpperCase());
+        setCategories(data.categories || []);
+      } catch (err) {
+        console.error("Failed to fetch categories:", err);
+        setError("Failed to load categories. Please try again.");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    loadCategories();
+  }, [level]);
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        <div className="flex items-center justify-center min-h-[40vh]">
+          <div className="text-center">
+            <div className="w-12 h-12 border-4 border-sky-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-600 dark:text-slate-400">
+              Loading categories...
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        <div className="flex items-center justify-center min-h-[40vh]">
+          <div className="text-center">
+            <p className="text-red-500 mb-4">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors"
+            >
+              Retry
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
@@ -495,15 +206,20 @@ export default function CEFRLevelPage() {
           {level?.toUpperCase()} Level Wordlist
         </h1>
         <p className="text-gray-500 dark:text-slate-400">
-          Explore vocabulary lessons organized by topic. Each lesson includes
-          interactive exercises to help you master new words.
+          Explore {categories.length} vocabulary categories. Each category
+          includes flashcards and exercises to help you master new words.
         </p>
       </div>
 
-      {/* Grid of Lesson Cards */}
+      {/* Grid of Category Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {lessons.map((lesson) => (
-          <LessonCard key={lesson.id} lesson={lesson} levelColor={colors} />
+        {categories.map((category) => (
+          <CategoryCard
+            key={category.slug}
+            category={category}
+            levelColor={colors}
+            level={level}
+          />
         ))}
       </div>
     </div>

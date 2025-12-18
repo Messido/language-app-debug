@@ -70,6 +70,24 @@ export async function fetchAvailableCategories() {
 }
 
 /**
+ * Fetch categories grouped by CEFR level with word counts
+ */
+export async function fetchCategoriesByLevel(level) {
+  const params = new URLSearchParams();
+  if (level) params.append("level", level);
+
+  const response = await fetch(
+    `${API_BASE_URL}/api/vocabulary/categories-by-level?${params}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch categories by level");
+  }
+
+  return response.json();
+}
+
+/**
  * Check if API is healthy
  */
 export async function checkApiHealth() {

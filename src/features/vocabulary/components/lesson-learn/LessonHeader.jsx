@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   XMarkIcon,
   SpeakerWaveIcon,
@@ -6,6 +6,16 @@ import {
 } from "@heroicons/react/24/outline";
 
 export default function LessonHeader({ currentIndex, total, onExit, words }) {
+  const { level, category } = useParams();
+
+  // Format category name for display
+  const formatCategoryName = (name) => {
+    if (!name) return "";
+    return name
+      .replace(/-/g, " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+  };
+
   return (
     <div className="bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-slate-800 sticky top-0 z-10">
       <div className="max-w-6xl mx-auto px-4 py-3">
@@ -13,11 +23,16 @@ export default function LessonHeader({ currentIndex, total, onExit, words }) {
         <div className="flex items-center justify-between gap-4 mb-4">
           {/* Breadcrumb */}
           <div className="hidden md:flex items-center gap-2 text-sm text-sky-500 font-medium">
-            <Link to="/vocabulary/cefr/a1" className="hover:underline">
-              A1 Level Wordlist
+            <Link
+              to={`/vocabulary/lessons/learn/${level || "a1"}`}
+              className="hover:underline"
+            >
+              {level?.toUpperCase() || "A1"} Level Wordlist
             </Link>
             <span className="text-gray-300">/</span>
-            <span className="text-gray-500 dark:text-slate-400">Colors</span>
+            <span className="text-gray-500 dark:text-slate-400">
+              {formatCategoryName(category)}
+            </span>
           </div>
 
           {/* Progress Bar */}

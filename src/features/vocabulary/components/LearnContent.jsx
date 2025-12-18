@@ -8,7 +8,7 @@ const levelData = [
     title: "A1 Beginner",
     subtitle: "Basic",
     level: "A1",
-    to: "/vocabulary/cefr/a1",
+    to: "/vocabulary/lessons/learn/a1",
     image:
       "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=500",
   },
@@ -16,7 +16,7 @@ const levelData = [
     title: "A2 Elementary",
     subtitle: "Basic",
     level: "A2",
-    to: "/vocabulary/cefr/a2",
+    to: "/vocabulary/lessons/learn/a2",
     image:
       "https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?auto=format&fit=crop&q=80&w=500",
   },
@@ -24,7 +24,7 @@ const levelData = [
     title: "B1 Intermediate",
     subtitle: "Independent",
     level: "B1",
-    to: "/vocabulary/cefr/b1",
+    to: "/vocabulary/lessons/learn/b1",
     image:
       "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=500",
   },
@@ -32,7 +32,7 @@ const levelData = [
     title: "B2 Upper Intermediate",
     subtitle: "Independent",
     level: "B2",
-    to: "/vocabulary/cefr/b2",
+    to: "/vocabulary/lessons/learn/b2",
     image:
       "https://images.unsplash.com/photo-1544531586-fde5298cdd40?auto=format&fit=crop&q=80&w=500",
   },
@@ -40,7 +40,7 @@ const levelData = [
     title: "C1 Advanced",
     subtitle: "Proficient",
     level: "C1",
-    to: "/vocabulary/cefr/c1",
+    to: "/vocabulary/lessons/learn/c1",
     image:
       "https://images.unsplash.com/photo-1550592704-6c76defa9985?auto=format&fit=crop&q=80&w=500",
   },
@@ -48,7 +48,7 @@ const levelData = [
     title: "C2 Mastery",
     subtitle: "Proficient",
     level: "C2",
-    to: "/vocabulary/cefr/c2",
+    to: "/vocabulary/lessons/learn/c2",
     image:
       "https://images.unsplash.com/photo-1664575602276-acd073f104c1?auto=format&fit=crop&q=80&w=500",
   },

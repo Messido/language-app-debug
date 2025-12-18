@@ -163,7 +163,7 @@ function LevelCard({
           </div>
 
           <Link
-            to={`/vocabulary/cefr/${level.toLowerCase()}`}
+            to={`/vocabulary/lessons/learn/${level.toLowerCase()}`}
             className="text-sky-500 hover:text-sky-600 dark:text-sky-400 dark:hover:text-sky-300 transition-colors"
           >
             <ArrowRightIcon className="w-5 h-5" />
