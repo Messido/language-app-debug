@@ -67,7 +67,10 @@ function ActionButton({ icon: Icon, label, onClick }) {
 // Category Card component - now uses API data
 function CategoryCard({ category, levelColor, level }) {
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 flex flex-col hover:shadow-md transition-all">
+    <Link
+      to={`/vocabulary/lessons/learn/${level}/${category.slug}`}
+      className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-5 flex flex-col hover:shadow-md transition-all cursor-pointer"
+    >
       {/* Image and Bookmark */}
       <div className="relative mb-4">
         {/* Placeholder image */}
@@ -77,65 +80,66 @@ function CategoryCard({ category, levelColor, level }) {
           </div>
         </div>
         {/* Bookmark */}
-        <button className="absolute top-2 right-2 p-1.5 bg-white/80 dark:bg-slate-700/80 rounded-lg hover:bg-white dark:hover:bg-slate-700 transition-colors">
+        <button
+          onClick={(e) => e.preventDefault()}
+          className="absolute top-2 right-2 p-1.5 bg-white/80 dark:bg-slate-700/80 rounded-lg hover:bg-white dark:hover:bg-slate-700 transition-colors"
+        >
           <BookmarkIcon className="w-4 h-4 text-gray-400 dark:text-slate-500" />
         </button>
       </div>
 
-      {/* Title */}
-      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
+      {/* Title - fixed height for consistency */}
+      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1 line-clamp-2 h-14">
         {category.name}
       </h3>
 
-      {/* Subcategories */}
-      <p className="text-sm text-gray-500 dark:text-slate-400 mb-4 line-clamp-2">
+      {/* Subcategories - fixed height for consistency */}
+      <p className="text-sm text-gray-500 dark:text-slate-400 mb-4 line-clamp-2 h-10">
         {category.subcategories.length > 0
           ? category.subcategories.slice(0, 3).join(", ")
           : "Learn vocabulary in this category"}
       </p>
 
-      {/* Progress bar - placeholder for now */}
-      <div className="flex items-center gap-2 mb-4">
-        <div
-          className={`flex-1 h-1.5 ${levelColor.progressBg} rounded-full overflow-hidden`}
-        >
+      {/* Bottom section - pushed to bottom with mt-auto */}
+      <div className="mt-auto">
+        {/* Progress bar - placeholder for now */}
+        <div className="flex items-center gap-2 mb-4">
           <div
-            className={`h-full ${levelColor.progressFill} rounded-full transition-all`}
-            style={{ width: "0%" }}
-          />
+            className={`flex-1 h-1.5 ${levelColor.progressBg} rounded-full overflow-hidden`}
+          >
+            <div
+              className={`h-full ${levelColor.progressFill} rounded-full transition-all`}
+              style={{ width: "0%" }}
+            />
+          </div>
+          <span className="text-xs text-gray-400 dark:text-slate-500 min-w-[28px] text-right">
+            0%
+          </span>
         </div>
-        <span className="text-xs text-gray-400 dark:text-slate-500 min-w-[28px] text-right">
-          0%
-        </span>
-      </div>
 
-      {/* Stats */}
-      <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-slate-400 mb-4 pb-4 border-b border-gray-100 dark:border-slate-700 whitespace-nowrap">
-        <span className="flex items-center gap-1">
-          <BookOpenIcon className="w-3.5 h-3.5" />
-          {category.wordCount} Words
-        </span>
-        <span className="flex items-center gap-1">
-          {category.subcategories.length} Topics
-        </span>
+        {/* Stats */}
+        <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-slate-400 mb-4 pb-4 border-b border-gray-100 dark:border-slate-700 whitespace-nowrap">
+          <span className="flex items-center gap-1">
+            <BookOpenIcon className="w-3.5 h-3.5" />
+            {category.wordCount} Words
+          </span>
+          <span className="flex items-center gap-1">
+            {category.subcategories.length} Topics
+          </span>
+        </div>
       </div>
 
       {/* Action buttons */}
-      <div className="flex items-center justify-between">
+      <div
+        className="flex items-center justify-between"
+        onClick={(e) => e.preventDefault()}
+      >
         <ActionButton icon={RectangleStackIcon} label="Word Card" />
-        <Link
-          to={`/vocabulary/lessons/learn/${level}/${category.slug}`}
-          className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors group"
-          title="Flashcards"
-        >
-          <div className="w-9 h-9 rounded-full bg-sky-100 dark:bg-sky-900/30 flex items-center justify-center">
-            <Squares2X2Icon className="w-4 h-4 text-sky-500" />
-          </div>
-        </Link>
+        <ActionButton icon={Squares2X2Icon} label="Learning Card" />
         <ActionButton icon={LanguageIcon} label="Match the pairs" />
         <ActionButton icon={BookOpenIcon} label="Spelling" />
       </div>
-    </div>
+    </Link>
   );
 }
 

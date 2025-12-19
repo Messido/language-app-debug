@@ -103,7 +103,7 @@ export default function LearnContent() {
         description={`Learn essential ${learningLanguage} vocabulary structured by CEFR levels, from beginner specific to advanced mastery.`}
         action={
           <Link
-            to="/vocabulary/level-based"
+            to="/vocabulary/lessons/learn/level-based"
             className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-sm transition-all hover:bg-gray-50 hover:text-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600 dark:hover:text-sky-400"
             aria-label="View all levels"
           >

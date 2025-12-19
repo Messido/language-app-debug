@@ -106,7 +106,7 @@ export default function VocabularyPage() {
         />
 
         {/* Level-Based route */}
-        <Route path="level-based" element={<LevelBasedPage />} />
+        <Route path="lessons/learn/level-based" element={<LevelBasedPage />} />
 
         {/* Topics route */}
         <Route path="topics" element={<TopicsPage />} />
