@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useUser } from "@clerk/clerk-react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
 import {
@@ -8,14 +9,17 @@ import {
   CompletionScreen,
 } from "../components/lesson-learn";
 import { fetchVocabulary } from "../../../services/vocabularyApi";
+import { saveProgress, getLessonProgress } from "../../../services/progressApi";
 
 export default function LessonLearnPage() {
   const navigate = useNavigate();
+  const { user } = useUser();
   const { level, category, topic } = useParams();
   const [words, setWords] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(null);
 
   // Determine the category to use (from level/category route or topic route)
@@ -27,26 +31,57 @@ export default function LessonLearnPage() {
         .join(" ")
     : "";
 
-  useEffect(() => {
-    async function loadWords() {
-      try {
-        setIsLoading(true);
-        setError(null);
-        // Fetch vocabulary filtered by level and/or category
-        const data = await fetchVocabulary({
-          level: level?.toUpperCase(),
-          category: categoryToUse,
-        });
-        setWords(data.words || []);
-      } catch (err) {
-        console.error("Failed to fetch vocabulary:", err);
-        setError("Failed to load vocabulary. Please try again.");
-      } finally {
-        setIsLoading(false);
+  // Load words and check for resume position
+  const loadWordsAndProgress = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      // Fetch vocabulary filtered by level and/or category
+      const data = await fetchVocabulary({
+        level: level?.toUpperCase(),
+        category: categoryToUse,
+      });
+
+      const fetchedWords = data.words || [];
+      setWords(fetchedWords);
+
+      // Check for saved progress to resume
+      if (user && level && categoryToUse && fetchedWords.length > 0) {
+        try {
+          const progress = await getLessonProgress(
+            user.id,
+            level,
+            categoryToUse
+          );
+
+          if (
+            progress.learnedCount > 0 &&
+            progress.learnedCount < fetchedWords.length
+          ) {
+            // Resume from next unlearned card
+            setCurrentIndex(progress.learnedCount);
+          } else if (progress.learnedCount >= fetchedWords.length) {
+            // All cards learned - show completion
+            setCurrentIndex(fetchedWords.length - 1);
+            setIsCompleted(true);
+          }
+        } catch (progressErr) {
+          // Ignore progress error, start from beginning
+          console.warn("Could not load progress, starting from beginning");
+        }
       }
+    } catch (err) {
+      console.error("Failed to fetch vocabulary:", err);
+      setError("Failed to load vocabulary. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
-    loadWords();
-  }, [level, categoryToUse]);
+  }, [level, categoryToUse, user]);
+
+  useEffect(() => {
+    loadWordsAndProgress();
+  }, [loadWordsAndProgress]);
 
   const handleNext = () => {
     if (currentIndex < words.length - 1) {
@@ -59,6 +94,31 @@ export default function LessonLearnPage() {
   const handlePrev = () => {
     if (currentIndex > 0) {
       setCurrentIndex((prev) => prev - 1);
+    }
+  };
+
+  const handleExit = () => {
+    navigate(-1);
+  };
+
+  const handleSaveAndExit = async () => {
+    if (!user || isSaving) return;
+
+    setIsSaving(true);
+    try {
+      // Save cards from 0 to currentIndex (inclusive)
+      const cardsToSave = words.slice(0, currentIndex + 1);
+
+      await saveProgress(user.id, level || "A1", categoryToUse, cardsToSave);
+
+      // Navigate back after save
+      navigate(-1);
+    } catch (err) {
+      console.error("Failed to save progress:", err);
+      // Still navigate even if save fails
+      navigate(-1);
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -118,7 +178,9 @@ export default function LessonLearnPage() {
         <LessonHeader
           currentIndex={words.length - 1}
           total={words.length}
-          onExit={() => navigate(-1)}
+          onExit={handleExit}
+          onSaveAndExit={handleSaveAndExit}
+          isSaving={isSaving}
           words={words}
         />
         <main className="flex-1 flex items-center justify-center p-4">
@@ -133,7 +195,9 @@ export default function LessonLearnPage() {
       <LessonHeader
         currentIndex={currentIndex}
         total={words.length}
-        onExit={() => navigate(-1)}
+        onExit={handleExit}
+        onSaveAndExit={handleSaveAndExit}
+        isSaving={isSaving}
         words={words}
       />
 

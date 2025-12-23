@@ -1,11 +1,15 @@
 import { Link, useParams } from "react-router-dom";
-import {
-  XMarkIcon,
-  SpeakerWaveIcon,
-  PlayIcon,
-} from "@heroicons/react/24/outline";
+import { XMarkIcon, CheckIcon } from "@heroicons/react/24/outline";
+import { Loader2 } from "lucide-react";
 
-export default function LessonHeader({ currentIndex, total, onExit, words }) {
+export default function LessonHeader({
+  currentIndex,
+  total,
+  onExit,
+  onSaveAndExit,
+  isSaving = false,
+  words,
+}) {
   const { level, category } = useParams();
 
   // Format category name for display
@@ -46,21 +50,37 @@ export default function LessonHeader({ currentIndex, total, onExit, words }) {
           </div>
 
           {/* Controls */}
-          <div className="flex items-center gap-3 text-gray-400">
+          <div className="flex items-center gap-2">
             <span className="text-sm font-bold text-sky-500 mr-2">
               {currentIndex + 1} / {total}
             </span>
-            <button className="hover:text-sky-500 transition-colors">
-              <SpeakerWaveIcon className="w-5 h-5" />
-            </button>
-            <button className="hover:text-sky-500 transition-colors">
-              <PlayIcon className="w-5 h-5" />
-            </button>
+
+            {/* Save & Exit Button */}
+            {onSaveAndExit && (
+              <button
+                onClick={onSaveAndExit}
+                disabled={isSaving}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-white bg-green-500 hover:bg-green-600 rounded-lg transition-colors disabled:opacity-50"
+                title="Save progress and exit"
+              >
+                {isSaving ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <CheckIcon className="w-4 h-4" />
+                )}
+                <span className="hidden sm:inline">Save</span>
+              </button>
+            )}
+
+            {/* Exit Button (discard) */}
             <button
               onClick={onExit}
-              className="hover:text-sky-500 transition-colors"
+              disabled={isSaving}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors disabled:opacity-50"
+              title="Exit without saving"
             >
-              <XMarkIcon className="w-6 h-6" />
+              <XMarkIcon className="w-4 h-4" />
+              <span className="hidden sm:inline">Exit</span>
             </button>
           </div>
         </div>

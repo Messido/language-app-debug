@@ -199,10 +199,24 @@ export default function ReviewWordsPage() {
                     <span className="flex-shrink-0 px-2 py-0.5 text-xs font-medium bg-sky-100 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 rounded-full">
                       {card.cardData.level}
                     </span>
+                    {card.cardData.category && (
+                      <span className="flex-shrink-0 px-2 py-0.5 text-xs font-medium bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-slate-400 rounded-full">
+                        {card.cardData.category}
+                      </span>
+                    )}
                   </div>
-                  <p className="text-sm text-gray-500 dark:text-slate-400 truncate">
-                    {card.cardData.forms.map((f) => f.word).join(" / ")}
-                  </p>
+                  <div className="flex items-center gap-3">
+                    <p className="text-sm text-gray-500 dark:text-slate-400 truncate">
+                      {card.cardData.forms.map((f) => f.word).join(" / ")}
+                    </p>
+                    <span className="text-xs text-gray-400 dark:text-slate-500 flex-shrink-0">
+                      Added{" "}
+                      {new Date(card.markedAt).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </span>
+                  </div>
                 </div>
               </div>
 

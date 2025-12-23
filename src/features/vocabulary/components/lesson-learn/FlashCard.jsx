@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useUser } from "@clerk/clerk-react";
-import { SpeakerWaveIcon } from "@heroicons/react/24/outline";
 import BookmarkIcon from "./BookmarkIcon";
 import {
   addToReview,
@@ -111,10 +110,7 @@ export default function FlashCard({ word, showBookmark = true }) {
               <div className="border-t border-gray-200 dark:border-slate-700 pt-4 grid grid-cols-2 gap-4">
                 {word.forms.map((form, idx) => (
                   <div key={idx}>
-                    <div className="flex items-center gap-2 mb-1">
-                      <button>
-                        <SpeakerWaveIcon className="w-4 h-4 text-gray-400" />
-                      </button>
+                    <div className="mb-1">
                       <span className="text-xl font-medium text-gray-900 dark:text-white">
                         {form.word}
                       </span>
@@ -133,21 +129,16 @@ export default function FlashCard({ word, showBookmark = true }) {
 
           {/* Example Sentence */}
           <div className="border-t border-gray-100 dark:border-slate-700 pt-8 mt-auto mb-12">
-            <div className="flex items-start gap-4 mb-4">
-              <button className="bg-gray-100 dark:bg-slate-700 p-2 rounded-full hover:bg-sky-50 dark:hover:bg-sky-900/30 transition-colors">
-                <SpeakerWaveIcon className="w-5 h-5 text-gray-600 dark:text-slate-300" />
-              </button>
-              <div>
-                <p className="text-lg font-bold text-gray-900 dark:text-white mb-1">
-                  {word.exampleTarget}
-                </p>
-                <p className="text-sm text-gray-400 dark:text-slate-500 font-mono mb-4">
-                  {word.phonetic}
-                </p>
-                <p className="text-base text-gray-600 dark:text-slate-300 italic">
-                  {word.exampleNative}
-                </p>
-              </div>
+            <div className="mb-4">
+              <p className="text-lg font-bold text-gray-900 dark:text-white mb-1">
+                {word.exampleTarget}
+              </p>
+              <p className="text-sm text-gray-400 dark:text-slate-500 font-mono mb-4">
+                {word.phonetic}
+              </p>
+              <p className="text-base text-gray-600 dark:text-slate-300 italic">
+                {word.exampleNative}
+              </p>
             </div>
           </div>
         </div>
