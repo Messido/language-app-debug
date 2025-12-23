@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useUser } from "@clerk/clerk-react";
 import {
   BookmarkIcon,
   BookOpenIcon,
@@ -8,6 +9,7 @@ import {
   LanguageIcon,
 } from "@heroicons/react/24/outline";
 import { fetchCategoriesByLevel } from "../../../services/vocabularyApi";
+import { getLessonProgress } from "../../../services/progressApi";
 
 // Level colors config
 const levelColors = {
@@ -64,8 +66,14 @@ function ActionButton({ icon: Icon, label, onClick }) {
   );
 }
 
-// Category Card component - now uses API data
-function CategoryCard({ category, levelColor, level }) {
+// Category Card component with progress
+function CategoryCard({ category, levelColor, level, learnedCount = 0 }) {
+  const totalWords = category.wordCount || 1;
+  const progressPercent = Math.min(
+    Math.round((learnedCount / totalWords) * 100),
+    100
+  );
+
   return (
     <Link
       to={`/vocabulary/lessons/learn/${level}/${category.slug}`}
@@ -102,18 +110,18 @@ function CategoryCard({ category, levelColor, level }) {
 
       {/* Bottom section - pushed to bottom with mt-auto */}
       <div className="mt-auto">
-        {/* Progress bar - placeholder for now */}
+        {/* Progress bar */}
         <div className="flex items-center gap-2 mb-4">
           <div
             className={`flex-1 h-1.5 ${levelColor.progressBg} rounded-full overflow-hidden`}
           >
             <div
-              className={`h-full ${levelColor.progressFill} rounded-full transition-all`}
-              style={{ width: "0%" }}
+              className={`h-full ${levelColor.progressFill} rounded-full transition-all duration-500`}
+              style={{ width: `${progressPercent}%` }}
             />
           </div>
-          <span className="text-xs text-gray-400 dark:text-slate-500 min-w-[28px] text-right">
-            0%
+          <span className="text-xs text-gray-400 dark:text-slate-500 min-w-[36px] text-right">
+            {learnedCount}/{totalWords}
           </span>
         </div>
 
@@ -145,7 +153,9 @@ function CategoryCard({ category, levelColor, level }) {
 
 export default function CEFRLevelPage() {
   const { level } = useParams();
+  const { user } = useUser();
   const [categories, setCategories] = useState([]);
+  const [progressMap, setProgressMap] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const colors = levelColors[level] || levelColors.a1;
@@ -166,6 +176,35 @@ export default function CEFRLevelPage() {
     }
     loadCategories();
   }, [level]);
+
+  // Fetch progress for each category when user is available
+  useEffect(() => {
+    async function loadProgress() {
+      if (!user || categories.length === 0) return;
+
+      const progressPromises = categories.map(async (category) => {
+        try {
+          const progress = await getLessonProgress(
+            user.id,
+            level,
+            category.slug
+          );
+          return { slug: category.slug, count: progress.learnedCount };
+        } catch {
+          return { slug: category.slug, count: 0 };
+        }
+      });
+
+      const results = await Promise.all(progressPromises);
+      const map = {};
+      results.forEach((r) => {
+        map[r.slug] = r.count;
+      });
+      setProgressMap(map);
+    }
+
+    loadProgress();
+  }, [user, categories, level]);
 
   // Loading state
   if (isLoading) {
@@ -223,6 +262,7 @@ export default function CEFRLevelPage() {
             category={category}
             levelColor={colors}
             level={level}
+            learnedCount={progressMap[category.slug] || 0}
           />
         ))}
       </div>
