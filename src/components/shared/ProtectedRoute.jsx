@@ -1,5 +1,6 @@
 import { useAuth } from "@clerk/clerk-react";
 import { Navigate } from "react-router-dom";
+import OnboardingGuard from "./OnboardingGuard";
 
 export default function ProtectedRoute({ children }) {
   const { isLoaded, isSignedIn } = useAuth();
@@ -21,6 +22,6 @@ export default function ProtectedRoute({ children }) {
     return <Navigate to="/sign-in" replace />;
   }
 
-  // Render children if authenticated
-  return <>{children}</>;
+  // Render children if authenticated, but check onboarding first
+  return <OnboardingGuard>{children}</OnboardingGuard>;
 }

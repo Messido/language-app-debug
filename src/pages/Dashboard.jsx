@@ -1,4 +1,8 @@
+import { useState } from "react";
 import { useUser } from "@clerk/clerk-react";
+import { useStudentProfile } from "@/hooks/useStudentProfile";
+import { useTeacherProfile } from "@/hooks/useTeacherProfile";
+import TeacherOnboardingModal from "@/features/auth/components/TeacherOnboardingModal";
 import {
   Card,
   CardContent,
@@ -14,10 +18,18 @@ import {
   Cog6ToothIcon,
   BookOpenIcon,
   PencilSquareIcon,
+  UserGroupIcon,
 } from "@heroicons/react/24/outline";
 
 export default function Dashboard() {
   const { user } = useUser();
+  const { profile } = useStudentProfile();
+  const {
+    profile: teacherProfile,
+    needsOnboarding: needsTeacherOnboarding,
+    refreshProfile: refreshTeacherProfile,
+  } = useTeacherProfile();
+  const [showTeacherOnboarding, setShowTeacherOnboarding] = useState(false);
 
   return (
     <div className="min-h-[calc(100vh-4rem)] py-12 px-4 sm:px-6 lg:px-8 bg-gray-50/50 dark:bg-body-dark">
@@ -101,10 +113,28 @@ export default function Dashboard() {
         <Card className="border-gray-100 dark:border-subtle-dark shadow-lg bg-white dark:bg-card-dark overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-blue-1 to-brand-blue-2" />
           <CardHeader>
-            <CardTitle className="text-2xl font-bold text-gray-900 dark:text-primary-dark">
-              Your Profile
-            </CardTitle>
-            <CardDescription>Manage your personal information</CardDescription>
+            <div className="flex justify-between items-start">
+              <div>
+                <CardTitle className="text-2xl font-bold text-gray-900 dark:text-primary-dark">
+                  Your Profile
+                </CardTitle>
+                <CardDescription>
+                  Manage your personal information
+                </CardDescription>
+              </div>
+              {profile && (
+                <div className="flex items-center gap-2 bg-brand-blue-1/10 text-brand-blue-1 px-3 py-1 rounded-full text-sm font-semibold">
+                  <span className="uppercase">{profile.targetLanguage}</span>
+                  <span className="text-gray-300">|</span>
+                  <span>{profile.level}</span>
+                </div>
+              )}
+              {teacherProfile && (
+                <div className="flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
+                  <span className="uppercase">Teacher</span>
+                </div>
+              )}
+            </div>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="flex items-center space-x-4">
@@ -126,17 +156,46 @@ export default function Dashboard() {
                     {user?.primaryEmailAddress?.emailAddress}
                   </p>
                 </div>
+                {profile && (
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {profile.purpose.map((p) => (
+                      <span
+                        key={p}
+                        className="text-xs bg-gray-100 dark:bg-elevated-2 text-gray-600 dark:text-secondary-dark px-2 py-0.5 rounded-md border border-gray-200 dark:border-subtle-dark"
+                      >
+                        {p}
+                      </span>
+                    ))}
+                    {profile.examIntent?.hasExam && (
+                      <span className="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 px-2 py-0.5 rounded-md border border-purple-200 dark:border-purple-800">
+                        Target: {profile.examIntent.examType}
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
 
             <div className="grid md:grid-cols-2 gap-4 pt-4 border-t border-gray-100 dark:border-subtle-dark">
-              <div className="space-y-1">
-                <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-muted-dark">
-                  User ID
-                </p>
-                <p className="font-mono text-xs bg-gray-50 dark:bg-elevated-2 p-2 rounded-md text-gray-600 dark:text-secondary-dark break-all border border-gray-100 dark:border-subtle-dark">
-                  {user?.id}
-                </p>
+              <div className="space-y-3">
+                <div className="space-y-1">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-muted-dark">
+                    Student ID
+                  </p>
+                  <p className="font-mono text-xs bg-gray-50 dark:bg-elevated-2 p-2 rounded-md text-gray-600 dark:text-secondary-dark break-all border border-gray-100 dark:border-subtle-dark">
+                    {profile?.studentId || "N/A"}
+                  </p>
+                </div>
+                {teacherProfile && (
+                  <div className="space-y-1">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-muted-dark">
+                      Teacher ID
+                    </p>
+                    <p className="font-mono text-xs bg-green-50 dark:bg-green-900/10 p-2 rounded-md text-green-700 dark:text-green-400 break-all border border-green-100 dark:border-green-800/20">
+                      {teacherProfile.teacherId}
+                    </p>
+                  </div>
+                )}
               </div>
               <div className="space-y-1">
                 <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-muted-dark">
@@ -212,8 +271,47 @@ export default function Dashboard() {
                 </p>
               </div>
             </Button>
+
+            {/* Teacher Action */}
+            <Button
+              variant="outline"
+              onClick={() => {
+                if (needsTeacherOnboarding) {
+                  setShowTeacherOnboarding(true);
+                } else {
+                  // Navigate to teacher dashboard (future) or show toast
+                  console.log("Already a teacher:", teacherProfile);
+                }
+              }}
+              className="h-auto p-6 flex flex-col items-start gap-4 hover:border-brand-blue-1 hover:bg-brand-blue-3/10 transition-all border-dashed dark:border-subtle-dark dark:hover:border-accent-primary"
+            >
+              <div className="p-2 rounded-full bg-green-100 text-green-600 dark:bg-green-900/40 dark:text-green-300">
+                <UserGroupIcon className="h-6 w-6" />
+              </div>
+              <div className="text-left">
+                <h3 className="font-semibold text-gray-900 dark:text-primary-dark">
+                  {needsTeacherOnboarding
+                    ? "Become a Teacher"
+                    : "Teacher Dashboard"}
+                </h3>
+                <p className="text-xs text-gray-500 dark:text-secondary-dark mt-1">
+                  {needsTeacherOnboarding
+                    ? "Start teaching on platform"
+                    : "Manage your classes"}
+                </p>
+              </div>
+            </Button>
           </div>
         </div>
+
+        {showTeacherOnboarding && (
+          <TeacherOnboardingModal
+            onComplete={() => {
+              setShowTeacherOnboarding(false);
+              refreshTeacherProfile();
+            }}
+          />
+        )}
       </div>
     </div>
   );
