@@ -3,6 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import {
+  UserGroupIcon,
   XMarkIcon,
   BellIcon,
   UserPlusIcon,
@@ -70,6 +71,17 @@ export default function MobileMenu({
               <div className="mt-6 px-6">
                 <SignedIn>
                   <div className="space-y-8">
+                    {/* Dashboard Link Mobile */}
+                    <Link to="/dashboard" onClick={() => setIsOpen(false)}>
+                      <Button
+                        variant="ghost"
+                        className="w-full justify-start text-lg font-semibold text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
+                      >
+                        <UserGroupIcon className="mr-3 h-6 w-6 text-brand-blue-1" />
+                        Dashboard
+                      </Button>
+                    </Link>
+
                     {/* Streaks Mobile */}
                     <button
                       onClick={() =>

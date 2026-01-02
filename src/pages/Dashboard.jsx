@@ -4,6 +4,7 @@ import { useUser } from "@clerk/clerk-react";
 import { useStudentProfile } from "@/hooks/useStudentProfile";
 import { useTeacherProfile } from "@/hooks/useTeacherProfile";
 import TeacherOnboardingModal from "@/features/auth/components/TeacherOnboardingModal";
+import ConnectTeacher from "@/components/shared/ConnectTeacher";
 import {
   Card,
   CardContent,
@@ -216,6 +217,20 @@ export default function Dashboard() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Classroom Connection */}
+        <div className="grid md:grid-cols-2 gap-6">
+          <ConnectTeacher />
+          {/* Placeholder for future assigned tasks or classroom updates */}
+          <Card className="border-gray-100 dark:border-subtle-dark shadow-sm bg-gray-50 dark:bg-card-dark flex items-center justify-center p-6 text-center">
+            <div className="space-y-2">
+              <p className="font-medium text-gray-900 dark:text-primary-dark">
+                Assigned Tasks
+              </p>
+              <p className="text-sm text-gray-500">No tasks assigned yet.</p>
+            </div>
+          </Card>
+        </div>
 
         {/* Quick Actions */}
         <div className="space-y-4">

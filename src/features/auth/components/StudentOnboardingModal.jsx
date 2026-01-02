@@ -119,6 +119,7 @@ export default function StudentOnboardingModal({ onComplete }) {
     try {
       const profileData = {
         clerkUserId: user.id,
+        name: user.fullName || user.firstName,
         ...data,
       };
       await createStudentProfile(profileData);

@@ -32,7 +32,10 @@ import PracticePage from "@/features/practice/pages/PracticePage";
 import BlogsPage from "@/features/blogs/pages/BlogsPage";
 import AIPracticePage from "@/features/ai-practice/pages/AIPracticePage";
 import ProgressReportPage from "@/features/progress-report/pages/ProgressReportPage";
-import TeacherDashboard from "@/pages/TeacherDashboard";
+import TeacherLayout from "@/features/teacher-dashboard/layout/TeacherLayout";
+import OverviewPage from "@/features/teacher-dashboard/pages/OverviewPage";
+import MyStudentsPage from "@/features/teacher-dashboard/pages/MyStudentsPage";
+import ClassesPage from "@/features/teacher-dashboard/pages/ClassesPage";
 
 function App() {
   return (
@@ -126,10 +129,14 @@ function App() {
             path="teacher-dashboard"
             element={
               <ProtectedRoute>
-                <TeacherDashboard />
+                <TeacherLayout />
               </ProtectedRoute>
             }
-          />
+          >
+            <Route index element={<OverviewPage />} />
+            <Route path="students" element={<MyStudentsPage />} />
+            <Route path="classes" element={<ClassesPage />} />
+          </Route>
 
           {/* 404 route */}
           <Route path="404" element={<NotFound />} />
