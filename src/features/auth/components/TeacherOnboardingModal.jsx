@@ -61,6 +61,7 @@ export default function TeacherOnboardingModal({ onComplete }) {
     try {
       const profileData = {
         clerkUserId: user.id,
+        name: user.fullName || user.firstName,
         ...data,
       };
       await createTeacherProfile(profileData);
