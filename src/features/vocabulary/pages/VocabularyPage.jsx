@@ -12,6 +12,11 @@ import ReviewContent from "../components/ReviewContent";
 import PracticeContent from "../components/PracticeContent";
 import MatchPairsGamePage from "./MatchPairsGamePage";
 import ChooseOptionGamePage from "./ChooseOptionGamePage";
+import FillInBlankGamePage from "./FillInBlankGamePage";
+import CorrectSpellingGamePage from "./CorrectSpellingGamePage";
+import HighlightWordGamePage from "./HighlightWordGamePage";
+import OddOneOutGamePage from "./OddOneOutGamePage";
+import GroupWordsGamePage from "./GroupWordsGamePage";
 import LevelBasedPage from "./LevelBasedPage";
 import LessonLearnPage from "./LessonLearnPage";
 import CEFRLevelPage from "./CEFRLevelPage";
@@ -76,6 +81,20 @@ export default function VocabularyPage() {
         <Route
           path="practice/choose-options"
           element={<ChooseOptionGamePage />}
+        />
+        <Route
+          path="practice/highlight-word"
+          element={<HighlightWordGamePage />}
+        />
+        <Route path="practice/odd-one-out" element={<OddOneOutGamePage />} />
+        <Route path="practice/group-words" element={<GroupWordsGamePage />} />
+        <Route
+          path="practice/fill-in-blank"
+          element={<FillInBlankGamePage />}
+        />
+        <Route
+          path="practice/correct-spelling"
+          element={<CorrectSpellingGamePage />}
         />
 
         {/* Level wordlist page - shows categories for a level */}

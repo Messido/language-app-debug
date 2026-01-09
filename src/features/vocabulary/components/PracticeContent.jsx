@@ -14,6 +14,7 @@ import {
   Ear,
   Pencil,
   Volume2,
+  GitMerge,
 } from "lucide-react";
 
 // Categorized Feature List
@@ -46,18 +47,24 @@ const practiceCategories = [
         name: "Highlight the Word",
         icon: Highlighter,
         desc: "Find the word in context",
+        path: "highlight-word",
+        status: "Live",
       },
       {
         id: "a5",
         name: "Odd One Out",
         icon: ListTodo,
         desc: "Identify the unrelated word",
+        path: "odd-one-out",
+        status: "Live",
       },
       {
         id: "a6",
         name: "Group Words",
-        icon: Layers,
-        desc: "Group related terms",
+        icon: GitMerge, // Changed icon
+        desc: "Sort words into categories", // Changed description
+        path: "group-words", // Added path
+        status: "Live", // Added status
       },
     ],
   },
@@ -118,12 +125,16 @@ const practiceCategories = [
         name: "Fill in the Blank",
         icon: Keyboard,
         desc: "Complete the sentence",
+        path: "fill-in-blank",
+        status: "Live",
       },
       {
         id: "c2",
         name: "Correct Spelling",
         icon: CheckCircle2,
         desc: "Fix misspelled words",
+        path: "correct-spelling",
+        status: "Live",
       },
       {
         id: "c3",
