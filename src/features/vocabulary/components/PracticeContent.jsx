@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { PencilSquareIcon, BookOpenIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Ear, Mic } from "lucide-react";
 
 export default function PracticeContent() {
+  const [activeTab, setActiveTab] = useState("ALL");
+
   const SECTIONS = [
     {
       title: "Speaking",
@@ -179,11 +182,20 @@ export default function PracticeContent() {
     },
   ];
 
+  const TABS = ["ALL", "SPEAKING", "WRITING", "READING", "LISTENING"];
+
+  const filteredSections =
+    activeTab === "ALL"
+      ? SECTIONS
+      : SECTIONS.filter(
+          (section) => section.title.toLowerCase() === activeTab.toLowerCase()
+        );
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 p-6 md:p-12 font-sans">
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Page Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4 tracking-tight">
             Practice Area
           </h1>
@@ -193,45 +205,67 @@ export default function PracticeContent() {
           </p>
         </div>
 
-        {/* Sections */}
-        {SECTIONS.map((section, idx) => (
-          <div key={idx} className="space-y-6">
-            {/* Section Header */}
-            <div className="flex items-center gap-4 border-b border-gray-200 dark:border-gray-800 pb-4">
-              {/* Icon wrapper */}
-              <div className={cn("p-3 rounded-2xl", section.color)}>
-                {section.icon}
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
-                  {section.title}
-                </h2>
-                <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">
-                  {section.description}
-                </p>
-              </div>
-            </div>
-
-            {/* Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {section.activities.map((activity, aIdx) => (
-                <Link
-                  key={aIdx}
-                  to={activity.path}
-                  className="group bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all border border-slate-100 dark:border-slate-800 relative overflow-hidden"
-                >
-                  {/* LIVE badge */}
-                  {activity.isLive && (
-                    <span className="absolute top-4 right-4 px-2 py-0.5 bg-green-100 text-green-700 text-[10px] font-bold uppercase tracking-wider rounded-full border border-green-200">
-                      Live
-                    </span>
+        <div className="space-y-8">
+          {/* Practice Skills Tabs */}
+          <div className="space-y-6">
+            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 border-b border-slate-200 dark:border-slate-800">
+              {TABS.map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={cn(
+                    "pb-3 text-sm font-bold tracking-wider transition-all relative",
+                    activeTab === tab
+                      ? "text-sky-500"
+                      : "text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
                   )}
+                >
+                  {tab}
+                  {activeTab === tab && (
+                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-sky-500 rounded-t-full" />
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
 
-                  <div className="flex flex-col h-full">
-                    {/* Icon */}
+        {/* Sections Grid */}
+        <div className="space-y-12">
+          {filteredSections.map((section, idx) => (
+            <div
+              key={idx}
+              className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500"
+            >
+              {/* Only show section title if viewing ALL, otherwise it's redundant/implied */}
+              {activeTab === "ALL" && (
+                <div className="flex items-center gap-4 pb-2">
+                  <div className={cn("p-2 rounded-xl", section.color)}>
+                    {section.icon}
+                  </div>
+                  <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
+                    {section.title}
+                  </h2>
+                </div>
+              )}
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {section.activities.map((activity, aIdx) => (
+                  <Link
+                    key={aIdx}
+                    to={activity.path}
+                    className="group bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all border border-slate-100 dark:border-slate-800 relative overflow-hidden flex flex-col items-center text-center"
+                  >
+                    {/* LIVE badge */}
+                    {activity.isLive && (
+                      <span className="absolute top-3 right-3 px-2 py-0.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-[10px] font-bold uppercase tracking-wider rounded-full border border-green-200 dark:border-green-800/50">
+                        Live
+                      </span>
+                    )}
+
                     <div
                       className={cn(
-                        "w-12 h-12 rounded-xl flex items-center justify-center text-xl mb-4 shadow-sm",
+                        "w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mb-4 shadow-sm transition-transform group-hover:scale-110 duration-300",
                         activity.color,
                         activity.iconIsComponent
                           ? "text-white"
@@ -241,19 +275,27 @@ export default function PracticeContent() {
                       {activity.icon}
                     </div>
 
-                    <h3 className="text-lg font-bold text-slate-800 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors mb-1">
+                    <h3 className="text-lg font-bold text-slate-800 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors mb-2">
                       {activity.title}
                     </h3>
 
-                    <p className="text-sm text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                    <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-[20ch]">
                       {activity.description}
                     </p>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+
+          {filteredSections.length === 0 && (
+            <div className="text-center py-20">
+              <p className="text-slate-400 text-lg">
+                No activities found for this section.
+              </p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
